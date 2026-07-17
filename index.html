@@ -51,7 +51,6 @@
       --red:         #e06c6c;
       --radius:      10px;
       --radius-sm:   6px;
-      --content-w:   1050px;
       --font-serif:  'PlantinNow', Georgia, 'Times New Roman', serif;
       --font-mono:   'Departure Mono', 'SFMono-Regular', ui-monospace, monospace;
       --font-sans:   -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -70,14 +69,10 @@
     a { color: var(--accent); text-decoration: none; transition: opacity .15s; }
     a:hover { opacity: .75; }
 
-    /* ── Container: constrains content width ────────── */
-    .container {
-      max-width: var(--content-w);
+    /* ── Fixed-width layout ────────────────────────── */
+    .page-wrap {
+      width: 960px;
       margin: 0 auto;
-      padding: 0 28px;
-    }
-    .container--narrow {
-      max-width: 820px;
     }
 
     /* ── Nav ──────────────────────────────────────────── */
@@ -89,7 +84,7 @@
       border-bottom: 1px solid var(--border);
     }
     .nav-inner {
-      max-width: var(--content-w);
+      width: 960px;
       margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
       padding: 14px 28px;
@@ -166,7 +161,7 @@
       min-height: 100vh;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       text-align: center;
-      padding: 120px 0 80px;
+      padding: 120px 28px 80px;
       position: relative;
       overflow: hidden;
     }
@@ -228,7 +223,6 @@
     .term-box {
       width: 100%; max-width: 720px;
       border-radius: var(--radius);
-      overflow: hidden;
       border: 1px solid var(--border);
       background: #0c0c09;
       box-shadow: 0 8px 40px rgba(0,0,0,.5);
@@ -279,7 +273,11 @@
       font-size: .78rem;
       line-height: 1.7;
     }
-    .welcome-box .logo-art { white-space: pre; }
+    .welcome-box .logo-art {
+      font-family: 'Courier New', 'Noto Sans Mono', 'SFMono-Regular', Consolas, monospace;
+      font-size: 1.1em;
+      letter-spacing: 0.05em;
+    }
     .welcome-box .label { color: var(--text-dim); font-weight: 700; }
     .welcome-box .row { display: flex; gap: 4px; }
 
@@ -302,8 +300,7 @@
     }
 
     /* ── Sections ──────────────────────────────────── */
-    section { padding: 90px 0; }
-    section > .container { display: flex; flex-direction: column; align-items: center; }
+    section { padding: 90px 28px; }
     .sec-label {
       font-family: var(--font-mono);
       font-size: .7rem;
@@ -311,6 +308,7 @@
       text-transform: uppercase;
       color: var(--text-dim);
       margin-bottom: 10px;
+      text-align: center;
     }
     .sec-title {
       font-family: var(--font-serif);
@@ -382,6 +380,7 @@
     .install-tab.active { background: var(--bg-elevated); color: var(--text); }
     .install-code {
       width: 100%; max-width: 580px;
+      margin: 0 auto;
       background: #0c0c09;
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -402,7 +401,7 @@
     @keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
 
     /* ── CTA ──────────────────────────────────────────── */
-    .cta-sec { text-align: center; padding: 100px 0; position: relative; }
+    .cta-sec { text-align: center; padding: 100px 28px; position: relative; }
     .cta-sec h2 { font-family: var(--font-serif); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 600; margin-bottom: 14px; }
     .cta-sec p { color: var(--text-muted); max-width: 440px; margin: 0 auto 28px; }
 
@@ -413,23 +412,11 @@
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
       gap: 16px;
       font-size: .8rem; color: var(--text-dim);
-      max-width: var(--content-w); margin: 0 auto;
+      width: 960px; margin: 0 auto;
     }
     footer .links { display: flex; gap: 20px; }
     footer a { color: var(--text-dim); }
     footer a:hover { color: var(--text-muted); }
-
-    @media (max-width: 640px) {
-      .nav-links a:not(.nav-cta) { display: none; }
-      .hero h1 { font-size: 2.4rem; }
-      .term-body { font-size: .68rem; }
-      .term-body .l { padding: 1px 14px; }
-      .welcome-line { padding: 0 14px; font-size: .7rem; }
-      section { padding: 60px 0; }
-      .container { padding: 0 18px; }
-      .nav-inner { padding: 14px 18px; }
-      .hero { padding: 120px 0 60px; }
-    }
   </style>
 </head>
 <body>
@@ -466,47 +453,45 @@
   <!-- ── Hero ────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-glow"></div>
-    <div class="container container--narrow">
-      <div class="hero-badge">
-        <span class="dot"></span>
-        v0.0.26 &ensp;·&ensp; SEA AI Agent
-      </div>
-      <h1>
-        Code with<br>
-        <span class="accent">the terminal agent</span>
-      </h1>
-      <p>
-        Calen Code is an AI coding agent that lives in your terminal.
-        Read, edit, debug, refactor, and ship code — all from a
-        single ~26 MB binary with zero dependencies.
-      </p>
-      <div class="hero-actions">
-        <a href="#install" class="btn btn-primary">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Install
-        </a>
-        <a href="https://github.com/calenard/calen-code" target="_blank" class="btn btn-secondary">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
-        </a>
-      </div>
+    <div class="hero-badge">
+      <span class="dot"></span>
+      v0.0.26 &ensp;·&ensp; SEA AI Agent
+    </div>
+    <h1>
+      Code with<br>
+      <span class="accent">the terminal agent</span>
+    </h1>
+    <p>
+      Calen Code is an AI coding agent that lives in your terminal.
+      Read, edit, debug, refactor, and ship code — all from a
+      single ~26 MB binary with zero dependencies.
+    </p>
+    <div class="hero-actions">
+      <a href="#install" class="btn btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Install
+      </a>
+      <a href="https://github.com/calenard/calen-code" target="_blank" class="btn btn-secondary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
 
-      <!-- ── Actual Welcome Screen ─────────────────── -->
-      <div class="term-box">
-        <div class="term-head">
-          <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
-          <span class="term-title">calen — interactive session</span>
-        </div>
-        <div class="term-body" style="padding:12px 0;">
-          <div class="welcome-box">
-            <div><span class="logo-art">▐█▛█▛█▌</span>  Welcome to <strong>Calen Code</strong>!</div>
-            <div><span class="logo-art">▐█████▌</span>  Send <em>/help</em> for help information.</div>
-            <div style="height:6px;"></div>
-            <div><span class="label">Directory:</span>  ~/project</div>
-            <div><span class="label">Session:</span>    session_037e…86b0</div>
-            <div><span class="label">Model:</span>      claude-sonnet-4</div>
-            <div><span class="label">Version:</span>    0.0.26</div>
-          </div>
+    <!-- ── Actual Welcome Screen ─────────────────── -->
+    <div class="term-box">
+      <div class="term-head">
+        <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
+        <span class="term-title">calen — interactive session</span>
+      </div>
+      <div class="term-body" style="padding:12px 0;">
+        <div class="welcome-box">
+          <div><span class="logo-art">▐█▛█▛█▌</span>  Welcome to <strong>Calen Code</strong>!</div>
+          <div><span class="logo-art">▐█████▌</span>  Send <em>/help</em> for help information.</div>
+          <div style="height:6px;"></div>
+          <div><span class="label">Directory:</span>  ~/project</div>
+          <div><span class="label">Session:</span>    session_037e…86b0</div>
+          <div><span class="label">Model:</span>      claude-sonnet-4</div>
+          <div><span class="label">Version:</span>    0.0.26</div>
         </div>
       </div>
     </div>
@@ -514,158 +499,152 @@
 
   <!-- ── Features ────────────────────────────────── -->
   <section id="features">
-    <div class="container">
-      <div class="sec-label">✦ Capabilities</div>
-      <h2 class="sec-title">Everything a terminal agent should do</h2>
-      <p class="sec-sub">From reading your codebase to shipping — Calen Code works with you, not against you.</p>
+    <div class="sec-label">✦ Capabilities</div>
+    <h2 class="sec-title">Everything a terminal agent should do</h2>
+    <p class="sec-sub">From reading your codebase to shipping — Calen Code works with you, not against you.</p>
 
-      <div class="feat-grid">
-        <div class="feat-card">
-          <div class="feat-icon">⌘</div>
-          <h3>Terminal-Native</h3>
-          <p>No Electron, no bloat. A single ~26 MB binary with zero runtime dependencies. Linux, macOS, Windows, Termux.</p>
-        </div>
-        <div class="feat-card">
-          <div class="feat-icon">~</div>
-          <h3>Full Context</h3>
-          <p>Reads your entire project — files, structure, history. Understands beyond a single file or cursor position.</p>
-        </div>
-        <div class="feat-card">
-          <div class="feat-icon">→</div>
-          <h3>Autonomous Agent</h3>
-          <p>Executes shell commands, edits files, runs tests, installs deps, plans multi-step changes — all on its own.</p>
-        </div>
-        <div class="feat-card">
-          <div class="feat-icon">⚙</div>
-          <h3>Permission-Aware</h3>
-          <p>Every action gated behind configurable policies. Safe for production — you stay in control.</p>
-        </div>
-        <div class="feat-card">
-          <div class="feat-icon">⊕</div>
-          <h3>Pluggable</h3>
-          <p>MCP server support, custom skills, plugin system. Integrate with your existing tools and workflows.</p>
-        </div>
-        <div class="feat-card">
-          <div class="feat-icon">◎</div>
-          <h3>Web UI</h3>
-          <p>Launch a full web interface with one command. REST + WebSocket API for remote sessions.</p>
-        </div>
+    <div class="feat-grid" style="max-width:960px;margin:0 auto;">
+      <div class="feat-card">
+        <div class="feat-icon">⌘</div>
+        <h3>Terminal-Native</h3>
+        <p>No Electron, no bloat. A single ~26 MB binary with zero runtime dependencies. Linux, macOS, Windows, Termux.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">~</div>
+        <h3>Full Context</h3>
+        <p>Reads your entire project — files, structure, history. Understands beyond a single file or cursor position.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">→</div>
+        <h3>Autonomous Agent</h3>
+        <p>Executes shell commands, edits files, runs tests, installs deps, plans multi-step changes — all on its own.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⚙</div>
+        <h3>Permission-Aware</h3>
+        <p>Every action gated behind configurable policies. Safe for production — you stay in control.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⊕</div>
+        <h3>Pluggable</h3>
+        <p>MCP server support, custom skills, plugin system. Integrate with your existing tools and workflows.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">◎</div>
+        <h3>Web UI</h3>
+        <p>Launch a full web interface with one command. REST + WebSocket API for remote sessions.</p>
       </div>
     </div>
   </section>
 
   <!-- ── Install ─────────────────────────────────── -->
   <section id="install" class="install-sec">
-    <div class="container">
-      <div class="sec-label">⚡ Quick Install</div>
-      <h2 class="sec-title">Get started in one line</h2>
-      <p class="sec-sub">Choose your platform — the binary is signed and verified after download.</p>
+    <div class="sec-label">⚡ Quick Install</div>
+    <h2 class="sec-title">Get started in one line</h2>
+    <p class="sec-sub">Choose your platform — the binary is signed and verified after download.</p>
 
-      <div class="install-tabs" role="tablist">
-        <button class="install-tab active" data-tab="unix">Linux / macOS</button>
-        <button class="install-tab" data-tab="termux">Termux</button>
-        <button class="install-tab" data-tab="windows">Windows</button>
-      </div>
+    <div class="install-tabs" role="tablist">
+      <button class="install-tab active" data-tab="unix">Linux / macOS</button>
+      <button class="install-tab" data-tab="termux">Termux</button>
+      <button class="install-tab" data-tab="windows">Windows</button>
+    </div>
 
-      <div class="panel active" id="panel-unix">
-        <div class="install-code">
-          <pre><span class="com"># Linux & macOS (curl)</span>
+    <div class="panel active" id="panel-unix">
+      <div class="install-code">
+        <pre><span class="com"># Linux & macOS (curl)</span>
 curl -fsSL https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<wbr>install.sh | sh
 
 <span class="com"># Or with wget</span>
 wget -qO- https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<wbr>install.sh | sh</pre>
-        </div>
       </div>
-      <div class="panel" id="panel-termux">
-        <div class="install-code">
-          <pre><span class="com"># Termux (Android)</span>
+    </div>
+    <div class="panel" id="panel-termux">
+      <div class="install-code">
+        <pre><span class="com"># Termux (Android)</span>
 pkg add curl
 curl -fsSL https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<wbr>install.sh | sh
 
 <span class="com"># Add to PATH:</span>
 <span class="kw">export</span> <span class="v">PATH</span>=<span class="s">"$HOME/.local/bin:$PATH"</span></pre>
-        </div>
       </div>
-      <div class="panel" id="panel-windows">
-        <div class="install-code">
-          <pre><span class="com"># Windows PowerShell (as Admin)</span>
-irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<wbr>install.ps1 | iex</pre>
-        </div>
-      </div>
-
-      <p style="margin-top:24px;color:var(--text-muted);font-size:.88rem;">
-        Installed to <code style="background:var(--bg-card);padding:1px 7px;border-radius:4px;font-family:var(--font-mono);font-size:.78rem;">~/.local/bin/calen</code>
-        &ensp;·&ensp; Run <code style="background:var(--bg-card);padding:1px 7px;border-radius:4px;font-family:var(--font-mono);font-size:.78rem;">calen --help</code>
-      </p>
     </div>
+    <div class="panel" id="panel-windows">
+      <div class="install-code">
+        <pre><span class="com"># Windows PowerShell (as Admin)</span>
+irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<wbr>install.ps1 | iex</pre>
+      </div>
+    </div>
+
+    <p style="margin-top:24px;color:var(--text-muted);font-size:.88rem;text-align:center;">
+      Installed to <code style="background:var(--bg-card);padding:1px 7px;border-radius:4px;font-family:var(--font-mono);font-size:.78rem;">~/.local/bin/calen</code>
+      &ensp;·&ensp; Run <code style="background:var(--bg-card);padding:1px 7px;border-radius:4px;font-family:var(--font-mono);font-size:.78rem;">calen --help</code>
+    </p>
   </section>
 
   <!-- ── Demo (real conversation) ─────────────────── -->
   <section id="demo">
-    <div class="container">
-      <div class="sec-label">✦ In Action</div>
-      <h2 class="sec-title">See it work</h2>
-      <p class="sec-sub">A real session — Calen Code reading, explaining, and refactoring autonomously.</p>
+    <div class="sec-label">✦ In Action</div>
+    <h2 class="sec-title">See it work</h2>
+    <p class="sec-sub">A real session — Calen Code reading, explaining, and refactoring autonomously.</p>
 
-      <div class="term-box" style="margin-top:0;">
-        <div class="term-head">
-          <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
-          <span class="term-title">~/project $ calen</span>
+    <div class="term-box" style="margin:0 auto;">
+      <div class="term-head">
+        <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
+        <span class="term-title">~/project $ calen</span>
+      </div>
+      <div class="term-body">
+
+        <!-- Welcome box appears -->
+        <div class="welcome-box" style="margin:4px 10px;font-size:.72rem;">
+          <div><span class="logo-art">▐█▛█▛█▌</span>  Welcome to <strong>Calen Code</strong>!</div>
+          <div><span class="logo-art">▐█████▌</span>  Send <em>/help</em> for help.</div>
         </div>
-        <div class="term-body">
+        <div class="l" style="height:4px;"></div>
 
-          <!-- Welcome box appears -->
-          <div class="welcome-box" style="margin:4px 10px;font-size:.72rem;">
-            <div><span class="logo-art">▐█▛█▛█▌</span>  Welcome to <strong>Calen Code</strong>!</div>
-            <div><span class="logo-art">▐█████▌</span>  Send <em>/help</em> for help.</div>
-          </div>
-          <div class="l" style="height:4px;"></div>
+        <!-- User asks a question -->
+        <div class="l y">✨ Can you explain the auth flow?</div>
+        <div class="l" style="height:2px;"></div>
 
-          <!-- User asks a question -->
-          <div class="l y">✨ Can you explain the auth flow?</div>
-          <div class="l" style="height:2px;"></div>
+        <!-- Assistant responds (● bullet) -->
+        <div class="l muted">●  Let me look at the auth module.</div>
 
-          <!-- Assistant responds (● bullet) -->
-          <div class="l muted">●  Let me look at the auth module.</div>
+        <!-- Tool calls that happen -->
+        <div class="l dim">  ● Using Read (src/auth/service.ts)</div>
+        <div class="l dim">  ● Using Read (src/auth/middleware.ts)</div>
+        <div class="l g">  ✓ Used Read (src/auth/middleware.ts) · 47 lines</div>
+        <div class="l g">  ✓ Used Read (src/auth/service.ts) · 83 lines</div>
+        <div class="l" style="height:2px;"></div>
 
-          <!-- Tool calls that happen -->
-          <div class="l dim">  ● Using Read (src/auth/service.ts)</div>
-          <div class="l dim">  ● Using Read (src/auth/middleware.ts)</div>
-          <div class="l g">  ✓ Used Read (src/auth/middleware.ts) · 47 lines</div>
-          <div class="l g">  ✓ Used Read (src/auth/service.ts) · 83 lines</div>
-          <div class="l" style="height:2px;"></div>
+        <!-- Assistant answers with markdown -->
+        <div class="l muted">  ● The auth flow works in three stages:</div>
+        <div class="l muted">    </div>
+        <div class="l muted">    1. **Middleware** extracts the JWT from the</div>
+        <div class="l muted">       `Authorization` header</div>
+        <div class="l muted">    2. **AuthService.verify()** validates the token</div>
+        <div class="l muted">    3. On success, the user object is attached</div>
+        <div class="l muted">       to the request context</div>
+        <div class="l" style="height:4px;"></div>
 
-          <!-- Assistant answers with markdown -->
-          <div class="l muted">  ● The auth flow works in three stages:</div>
-          <div class="l muted">    </div>
-          <div class="l muted">    1. **Middleware** extracts the JWT from the</div>
-          <div class="l muted">       `Authorization` header</div>
-          <div class="l muted">    2. **AuthService.verify()** validates the token</div>
-          <div class="l muted">    3. On success, the user object is attached</div>
-          <div class="l muted">       to the request context</div>
-          <div class="l" style="height:4px;"></div>
+        <!-- User asks for a change -->
+        <div class="l y">✨ Add rate limiting to /login</div>
+        <div class="l" style="height:2px;"></div>
 
-          <!-- User asks for a change -->
-          <div class="l y">✨ Add rate limiting to /login</div>
-          <div class="l" style="height:2px;"></div>
+        <!-- Agent plans and executes -->
+        <div class="l dim">  ● Using Agent (Add rate limiting to login route)</div>
+        <div class="l e">    ✦ Generating plan …</div>
+        <div class="l e">    ✦ 3 files will be modified</div>
+        <div class="l g">    ✓ Edit (src/auth/middleware.ts) +8 -2</div>
+        <div class="l g">    ✓ Edit (src/auth/service.ts) +12 -0</div>
+        <div class="l g">    ✓ Edit (src/config.ts) +4 -0</div>
+        <div class="l dim">  ● Bash (npm test)</div>
+        <div class="l dim" style="padding-left:40px;">$ npm test</div>
+        <div class="l g" style="padding-left:40px;">  ✓ Tests passed (2 files, 12 assertions)</div>
+        <div class="l g">  ✓ Used Bash (npm test) · exit 0</div>
+        <div class="l" style="height:2px;"></div>
 
-          <!-- Agent plans and executes -->
-          <div class="l dim">  ● Using Agent (Add rate limiting to login route)</div>
-          <div class="l e">    ✦ Generating plan …</div>
-          <div class="l e">    ✦ 3 files will be modified</div>
-          <div class="l g">    ✓ Edit (src/auth/middleware.ts) +8 -2</div>
-          <div class="l g">    ✓ Edit (src/auth/service.ts) +12 -0</div>
-          <div class="l g">    ✓ Edit (src/config.ts) +4 -0</div>
-          <div class="l dim">  ● Bash (npm test)</div>
-          <div class="l dim" style="padding-left:40px;">$ npm test</div>
-          <div class="l g" style="padding-left:40px;">  ✓ Tests passed (2 files, 12 assertions)</div>
-          <div class="l g">  ✓ Used Bash (npm test) · exit 0</div>
-          <div class="l" style="height:2px;"></div>
+        <!-- Final result -->
+        <div class="l g">  ✓ Done! Rate limiting is now active on /login.</div>
 
-          <!-- Final result -->
-          <div class="l g">  ✓ Done! Rate limiting is now active on /login.</div>
-
-        </div>
       </div>
     </div>
   </section>
@@ -673,14 +652,12 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
   <!-- ── CTA ─────────────────────────────────────── -->
   <section class="cta-sec">
     <div class="hero-glow" style="top:-300px;"></div>
-    <div class="container container--narrow">
-      <h2>Ready to ship faster?</h2>
-      <p>One command. No setup. Just you, your terminal, and an AI agent that ships.</p>
-      <a href="#install" class="btn btn-primary" style="font-size:1rem;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Install Calen Code
-      </a>
-    </div>
+    <h2>Ready to ship faster?</h2>
+    <p>One command. No setup. Just you, your terminal, and an AI agent that ships.</p>
+    <a href="#install" class="btn btn-primary" style="font-size:1rem;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Install Calen Code
+    </a>
   </section>
 
   <footer>
