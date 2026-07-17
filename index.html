@@ -529,6 +529,10 @@
       width: 3em; height: 2em;
     }
     .floating-face svg { display: block; width: 100%; height: 100%; }
+    .floating-face .face-normal { display: block; }
+    .floating-face .face-spam { display: none; }
+    .floating-face.spam-mode .face-normal { display: none; }
+    .floating-face.spam-mode .face-spam { display: block; }
     .floating-face .fe-eyes {
       animation: nav-eye-look 16s ease-in-out infinite;
     }
@@ -603,7 +607,7 @@
 
   <!-- ── Floating face ──────────────────────────────── -->
   <div class="floating-face" id="floatingFace" onclick="blinkFloatingFace()">
-    <svg viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
+    <svg class="face-normal" viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
       <defs>
         <mask id="feEyes" maskUnits="userSpaceOnUse">
           <rect x="0" y="0" width="32" height="22" fill="#fff" />
@@ -614,6 +618,24 @@
         </mask>
       </defs>
       <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#feEyes)" />
+    </svg>
+    <svg class="face-spam" viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
+      <defs>
+        <mask id="feEyesSpam" maskUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="32" height="22" fill="#fff" />
+          <g fill="#000">
+            <rect x="11.8" y="9" width="2.8" height="4" rx="1.4" />
+            <rect x="17.4" y="9" width="2.8" height="4" rx="1.4" />
+          </g>
+          <g stroke="#fff" stroke-width="0.45" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12.2 10.8 Q13.2 9.7 14.1 10.8" />
+            <path d="M13.8 10.5 L14.1 10.8 L13.7 10.9" />
+            <path d="M17.8 10.8 Q18.8 9.7 19.7 10.8" />
+            <path d="M19.4 10.5 L19.7 10.8 L19.3 10.9" />
+          </g>
+        </mask>
+      </defs>
+      <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#feEyesSpam)" />
     </svg>
   </div>
 
@@ -936,9 +958,26 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
       }, { passive: true });
     })();
 
+    let _faceClickTimes = [];
+    let _faceSpamTimer = null;
     function blinkFloatingFace() {
       const el = document.getElementById('floatingFace');
       if (!el) return;
+
+      const now = Date.now();
+      _faceClickTimes.push(now);
+      _faceClickTimes = _faceClickTimes.filter(t => now - t < 1200);
+
+      if (_faceClickTimes.length >= 4) {
+        el.classList.add('spam-mode');
+        clearTimeout(_faceSpamTimer);
+        _faceSpamTimer = setTimeout(() => {
+          el.classList.remove('spam-mode');
+        }, 2500);
+        _faceClickTimes = [];
+        return;
+      }
+
       el.classList.remove('blink-now');
       void el.getBoundingClientRect();
       el.classList.add('blink-now');
