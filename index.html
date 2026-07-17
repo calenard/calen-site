@@ -301,10 +301,6 @@
       font-size: .78rem;
       line-height: 1.7;
     }
-    .welcome-box .logo-art {
-      font-family: 'JetBrains Mono', 'Courier New', 'Noto Sans Mono', 'SFMono-Regular', Consolas, monospace;
-      font-size: 1.1em;
-      letter-spacing: 0.05em;
     }
     .welcome-box .label { color: var(--text-dim); font-weight: 700; }
     .welcome-box .row { display: flex; gap: 4px; }
@@ -601,6 +597,19 @@
     </div>
   </nav>
 
+  <!-- Shared SVG defs for welcome box faces -->
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;">
+    <defs>
+      <mask id="wbEyes" maskUnits="userSpaceOnUse">
+        <rect x="0" y="0" width="32" height="22" fill="#fff" />
+        <g fill="#000">
+          <rect x="11.8" y="7" width="2.8" height="8" rx="1.4" />
+          <rect x="17.4" y="7" width="2.8" height="8" rx="1.4" />
+        </g>
+      </mask>
+    </defs>
+  </svg>
+
   <!-- ── Floating face ──────────────────────────────── -->
   <div class="floating-face" id="floatingFace" onclick="blinkFloatingFace()">
     <svg viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
@@ -652,8 +661,8 @@
       </div>
       <div class="term-body" style="padding:12px 0;">
         <div class="welcome-box">
-          <div><span class="logo-art">▐█▛█▛█▌</span>  Welcome to <strong>Calen Code</strong>!</div>
-          <div><span class="logo-art">▐█████▌</span>  Send <em>/help</em> for help information.</div>
+          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#wbEyes)"/></svg> Welcome to <strong>Calen Code</strong>!</div>
+          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#wbEyes)"/></svg> Send <em>/help</em> for help information.</div>
           <div style="height:6px;"></div>
           <div><span class="label">Directory:</span>  ~/project</div>
           <div><span class="label">Session:</span>    session_037e…86b0</div>
@@ -777,8 +786,8 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
 
         <!-- Welcome box appears -->
         <div class="welcome-box" style="margin:4px 10px;font-size:.72rem;">
-          <div><span class="logo-art">▐█▛█▛█▌</span>  Welcome to <strong>Calen Code</strong>!</div>
-          <div><span class="logo-art">▐█████▌</span>  Send <em>/help</em> for help.</div>
+          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#wbEyes)"/></svg> Welcome to <strong>Calen Code</strong>!</div>
+          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#wbEyes)"/></svg> Send <em>/help</em> for help.</div>
           <div style="height:4px;"></div>
           <div><span class="label">Directory:</span>  ~/project</div>
           <div><span class="label">Model:</span>      claude-fable-5</div>
