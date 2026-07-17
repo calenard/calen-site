@@ -537,6 +537,9 @@
       transform-origin: center;
       animation: nav-eye-blink 11s ease-in-out infinite;
     }
+    .floating-face.blink-now .fe-eye {
+      animation: nav-eye-blink-once 0.24s ease-in-out !important;
+    }
 
     /* ── Mobile nav ──────────────────────────────────── */
     @media (max-width: 720px) {
@@ -649,8 +652,7 @@
       </div>
       <div class="term-body" style="padding:12px 0;">
         <div class="welcome-box">
-          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><defs><mask id="w1" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="32" height="22" fill="#fff"/><rect x="11.8" y="7" width="2.8" height="8" rx="1.4" fill="#000"/><rect x="17.4" y="7" width="2.8" height="8" rx="1.4" fill="#000"/></mask></defs><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#w1)"/></svg> Welcome to <strong>Calen Code</strong>!</div>
-          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><defs><mask id="w2" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="32" height="22" fill="#fff"/><rect x="11.8" y="7" width="2.8" height="8" rx="1.4" fill="#000"/><rect x="17.4" y="7" width="2.8" height="8" rx="1.4" fill="#000"/></mask></defs><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#w2)"/></svg> Send <em>/help</em> for help information.</div>
+          <div style="display:flex;align-items:center;gap:12px;"><svg viewBox="0 0 32 22" fill="none" width="44" height="30" style="flex:none;color:var(--accent);"><defs><mask id="w1" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="32" height="22" fill="#fff"/><rect x="11.8" y="7" width="2.8" height="8" rx="1.4" fill="#000"/><rect x="17.4" y="7" width="2.8" height="8" rx="1.4" fill="#000"/></mask></defs><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#w1)"/></svg> <span>Welcome to <strong>Calen Code</strong>! &ensp;·&ensp; Send <em>/help</em> for help.</span></div>
           <div style="height:6px;"></div>
           <div><span class="label">Directory:</span>  ~/project</div>
           <div><span class="label">Session:</span>    session_037e…86b0</div>
@@ -774,8 +776,7 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
 
         <!-- Welcome box appears -->
         <div class="welcome-box" style="margin:4px 10px;font-size:.72rem;">
-          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><defs><mask id="w3" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="32" height="22" fill="#fff"/><rect x="11.8" y="7" width="2.8" height="8" rx="1.4" fill="#000"/><rect x="17.4" y="7" width="2.8" height="8" rx="1.4" fill="#000"/></mask></defs><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#w3)"/></svg> Welcome to <strong>Calen Code</strong>!</div>
-          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><defs><mask id="w4" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="32" height="22" fill="#fff"/><rect x="11.8" y="7" width="2.8" height="8" rx="1.4" fill="#000"/><rect x="17.4" y="7" width="2.8" height="8" rx="1.4" fill="#000"/></mask></defs><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#w4)"/></svg> Send <em>/help</em> for help.</div>
+          <div style="display:flex;align-items:center;gap:12px;"><svg viewBox="0 0 32 22" fill="none" width="44" height="30" style="flex:none;color:var(--accent);"><defs><mask id="w3" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="32" height="22" fill="#fff"/><rect x="11.8" y="7" width="2.8" height="8" rx="1.4" fill="#000"/><rect x="17.4" y="7" width="2.8" height="8" rx="1.4" fill="#000"/></mask></defs><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#w3)"/></svg> <span>Welcome to <strong>Calen Code</strong>! &ensp;·&ensp; Send <em>/help</em> for help.</span></div>
           <div style="height:4px;"></div>
           <div><span class="label">Directory:</span>  ~/project</div>
           <div><span class="label">Model:</span>      claude-fable-5</div>
@@ -938,10 +939,10 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
     function blinkFloatingFace() {
       const el = document.getElementById('floatingFace');
       if (!el) return;
-      el.style.animation = 'none';
+      el.classList.remove('blink-now');
       void el.getBoundingClientRect();
-      el.style.animation = '';
-      setTimeout(() => { el.style.animation = ''; }, 300);
+      el.classList.add('blink-now');
+      setTimeout(() => el.classList.remove('blink-now'), 300);
     }
   </script>
 </body>
