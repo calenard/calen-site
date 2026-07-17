@@ -143,6 +143,7 @@
     /* ── Nav logo face ─────────────────────────────── */
     .nav-logo-face {
       display: inline-flex;
+      position: relative;
       width: 2.2em; height: 1.5em;
       color: var(--accent);
       flex: none;
@@ -151,6 +152,21 @@
     .nav-logo-face svg {
       display: block;
       width: 100%; height: 100%;
+    }
+    .nav-logo-face .nav-face-normal {
+      transition: opacity 0.35s ease;
+    }
+    .nav-logo-face .nav-face-angry {
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .nav-logo-face.angry-mode .nav-face-normal {
+      opacity: 0.3;
+    }
+    .nav-logo-face.angry-mode .nav-face-angry {
+      opacity: 1;
     }
     .nav-logo-face .nav-eyes {
       animation: nav-eye-look 16s ease-in-out infinite;
@@ -180,8 +196,8 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .nav-eyes, .nav-eye, .fe-eyes, .fe-eye { animation: none !important; }
-      nav { transition: none; }
-      .floating-face { transition: none; }
+      nav, .nav-logo-face .nav-face-angry, .nav-logo-face .nav-face-normal,
+      .floating-face .face-normal, .floating-face .face-spam { transition: none !important; }
     }
 
     /* ── Hero ─────────────────────────────────────────── */
@@ -529,10 +545,22 @@
       width: 3em; height: 2em;
     }
     .floating-face svg { display: block; width: 100%; height: 100%; }
-    .floating-face .face-normal { display: block; }
-    .floating-face .face-spam { display: none; }
-    .floating-face.spam-mode .face-normal { display: none; }
-    .floating-face.spam-mode .face-spam { display: block; }
+    .floating-face .face-normal {
+      transition: opacity 0.4s ease;
+    }
+    .floating-face .face-spam {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .floating-face.angry-mode .face-normal {
+      opacity: 0.3;
+    }
+    .floating-face.angry-mode .face-spam {
+      opacity: 1;
+    }
     .floating-face .fe-eyes {
       animation: nav-eye-look 16s ease-in-out infinite;
     }
@@ -574,7 +602,7 @@
     <div class="nav-inner">
       <div class="logo">
         <span class="nav-logo-face" id="navLogoFace" onclick="blinkNavLogo()">
-          <svg viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
+          <svg class="nav-face-normal" viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
             <defs>
               <mask id="navEyes" maskUnits="userSpaceOnUse">
                 <rect x="0" y="0" width="32" height="22" fill="#fff" />
@@ -585,6 +613,20 @@
               </mask>
             </defs>
             <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#navEyes)" />
+          </svg>
+          <svg class="nav-face-angry" viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
+            <defs>
+              <mask id="navEyesAngry" maskUnits="userSpaceOnUse">
+                <rect x="0" y="0" width="32" height="22" fill="#fff" />
+                <polygon points="11.8,9.5 14.6,10.5 14.6,11.3 11.8,10.3" fill="#000" />
+                <polygon points="17.4,10.5 20.2,9.5 20.2,10.3 17.4,11.3" fill="#000" />
+                <g stroke="#fff" stroke-width="0.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M13.8 10.2 L12.8 10.7 L13.8 11.2" />
+                  <path d="M18.2 10.2 L19.2 10.7 L18.2 11.2" />
+                </g>
+              </mask>
+            </defs>
+            <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#navEyesAngry)" />
           </svg>
         </span>
         Calen <em>Code</em>
@@ -621,21 +663,19 @@
     </svg>
     <svg class="face-spam" viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
       <defs>
-        <mask id="feEyesSpam" maskUnits="userSpaceOnUse">
+        <mask id="feEyesAngry" maskUnits="userSpaceOnUse">
           <rect x="0" y="0" width="32" height="22" fill="#fff" />
-          <g fill="#000">
-            <rect x="11.8" y="9" width="2.8" height="4" rx="1.4" />
-            <rect x="17.4" y="9" width="2.8" height="4" rx="1.4" />
-          </g>
-          <g stroke="#fff" stroke-width="0.45" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12.2 10.8 Q13.2 9.7 14.1 10.8" />
-            <path d="M13.8 10.5 L14.1 10.8 L13.7 10.9" />
-            <path d="M17.8 10.8 Q18.8 9.7 19.7 10.8" />
-            <path d="M19.4 10.5 L19.7 10.8 L19.3 10.9" />
+          <!-- Angry slit eyes — thin, angled for furrowed brow -->
+          <polygon points="11.8,9.5 14.6,10.5 14.6,11.3 11.8,10.3" fill="#000" />
+          <polygon points="17.4,10.5 20.2,9.5 20.2,10.3 17.4,11.3" fill="#000" />
+          <!-- Sharp arrow marks inside eyes -->
+          <g stroke="#fff" stroke-width="0.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13.8 10.2 L12.8 10.7 L13.8 11.2" />
+            <path d="M18.2 10.2 L19.2 10.7 L18.2 11.2" />
           </g>
         </mask>
       </defs>
-      <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#feEyesSpam)" />
+      <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#feEyesAngry)" />
     </svg>
   </div>
 
@@ -904,10 +944,34 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
         if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
+    // Shared angry-mode state
+    let _navClickTimes = [];
+    let _faceClickTimes = [];
+    let _angryTimer = null;
+
+    function triggerAngry(el) {
+      el.classList.add('angry-mode');
+      clearTimeout(_angryTimer);
+      _angryTimer = setTimeout(() => {
+        el.classList.remove('angry-mode');
+      }, 2500);
+    }
+
     // Blink nav logo face on click
     function blinkNavLogo() {
       const el = document.getElementById('navLogoFace');
       if (!el) return;
+
+      const now = Date.now();
+      _navClickTimes.push(now);
+      _navClickTimes = _navClickTimes.filter(t => now - t < 1200);
+
+      if (_navClickTimes.length >= 4) {
+        triggerAngry(el);
+        _navClickTimes = [];
+        return;
+      }
+
       el.classList.remove('blink-now');
       void el.getBoundingClientRect();
       el.classList.add('blink-now');
@@ -958,8 +1022,6 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
       }, { passive: true });
     })();
 
-    let _faceClickTimes = [];
-    let _faceSpamTimer = null;
     function blinkFloatingFace() {
       const el = document.getElementById('floatingFace');
       if (!el) return;
@@ -969,11 +1031,7 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
       _faceClickTimes = _faceClickTimes.filter(t => now - t < 1200);
 
       if (_faceClickTimes.length >= 4) {
-        el.classList.add('spam-mode');
-        clearTimeout(_faceSpamTimer);
-        _faceSpamTimer = setTimeout(() => {
-          el.classList.remove('spam-mode');
-        }, 2500);
+        triggerAngry(el);
         _faceClickTimes = [];
         return;
       }
