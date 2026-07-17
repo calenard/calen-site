@@ -524,8 +524,8 @@
     .floating-face.at-bottom {
       top: auto;
       bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
+      left: 28px;
+      transform: none;
       width: 3em; height: 2em;
     }
     .floating-face svg { display: block; width: 100%; height: 100%; }
@@ -597,18 +597,6 @@
     </div>
   </nav>
 
-  <!-- Shared SVG defs for welcome box faces -->
-  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;">
-    <defs>
-      <mask id="wbEyes" maskUnits="userSpaceOnUse">
-        <rect x="0" y="0" width="32" height="22" fill="#fff" />
-        <g fill="#000">
-          <rect x="11.8" y="7" width="2.8" height="8" rx="1.4" />
-          <rect x="17.4" y="7" width="2.8" height="8" rx="1.4" />
-        </g>
-      </mask>
-    </defs>
-  </svg>
 
   <!-- ── Floating face ──────────────────────────────── -->
   <div class="floating-face" id="floatingFace" onclick="blinkFloatingFace()">
@@ -661,8 +649,8 @@
       </div>
       <div class="term-body" style="padding:12px 0;">
         <div class="welcome-box">
-          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#wbEyes)"/></svg> Welcome to <strong>Calen Code</strong>!</div>
-          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#wbEyes)"/></svg> Send <em>/help</em> for help information.</div>
+          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><defs><mask id="w1" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="32" height="22" fill="#fff"/><rect x="11.8" y="7" width="2.8" height="8" rx="1.4" fill="#000"/><rect x="17.4" y="7" width="2.8" height="8" rx="1.4" fill="#000"/></mask></defs><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#w1)"/></svg> Welcome to <strong>Calen Code</strong>!</div>
+          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><defs><mask id="w2" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="32" height="22" fill="#fff"/><rect x="11.8" y="7" width="2.8" height="8" rx="1.4" fill="#000"/><rect x="17.4" y="7" width="2.8" height="8" rx="1.4" fill="#000"/></mask></defs><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#w2)"/></svg> Send <em>/help</em> for help information.</div>
           <div style="height:6px;"></div>
           <div><span class="label">Directory:</span>  ~/project</div>
           <div><span class="label">Session:</span>    session_037e…86b0</div>
@@ -786,8 +774,8 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
 
         <!-- Welcome box appears -->
         <div class="welcome-box" style="margin:4px 10px;font-size:.72rem;">
-          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#wbEyes)"/></svg> Welcome to <strong>Calen Code</strong>!</div>
-          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#wbEyes)"/></svg> Send <em>/help</em> for help.</div>
+          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><defs><mask id="w3" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="32" height="22" fill="#fff"/><rect x="11.8" y="7" width="2.8" height="8" rx="1.4" fill="#000"/><rect x="17.4" y="7" width="2.8" height="8" rx="1.4" fill="#000"/></mask></defs><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#w3)"/></svg> Welcome to <strong>Calen Code</strong>!</div>
+          <div style="display:flex;align-items:center;gap:8px;"><svg viewBox="0 0 32 22" fill="none" width="22" height="15" style="flex:none;color:var(--accent);"><defs><mask id="w4" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="32" height="22" fill="#fff"/><rect x="11.8" y="7" width="2.8" height="8" rx="1.4" fill="#000"/><rect x="17.4" y="7" width="2.8" height="8" rx="1.4" fill="#000"/></mask></defs><rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#w4)"/></svg> Send <em>/help</em> for help.</div>
           <div style="height:4px;"></div>
           <div><span class="label">Directory:</span>  ~/project</div>
           <div><span class="label">Model:</span>      claude-fable-5</div>
