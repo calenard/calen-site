@@ -11,7 +11,6 @@
   <link rel="preload" href="fonts/DepartureMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
   <style>
-    /* ── Fonts ─────────────────────────────────────────── */
     @font-face {
       font-family: 'PlantinNow';
       src: url('fonts/PlantinNowVariable-Upright.woff2') format('woff2-variations'),
@@ -36,7 +35,6 @@
       font-display: swap;
     }
 
-    /* ── Reset & Base ─────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -47,9 +45,10 @@
       --text:        #ece8e0;
       --text-muted:  #8e8a82;
       --text-dim:    #5e5a54;
-      --accent:      #8ab4f8;
+      --accent:      #7eb8f0;
       --green:       #7ecb6d;
       --amber:       #e8c88a;
+      --red:         #e06c6c;
       --radius:      10px;
       --radius-sm:   6px;
       --font-serif:  'PlantinNow', Georgia, 'Times New Roman', serif;
@@ -115,7 +114,7 @@
       position: absolute;
       width: 540px; height: 540px;
       border-radius: 50%;
-      background: radial-gradient(circle at center, rgba(138,180,248,.06), transparent 70%);
+      background: radial-gradient(circle at center, rgba(126,184,240,.06), transparent 70%);
       top: -160px; left: 50%; transform: translateX(-50%);
       pointer-events: none;
     }
@@ -165,48 +164,72 @@
     .btn-secondary { background: var(--bg-card); color: var(--text); border: 1px solid var(--border); }
     .btn-secondary:hover { border-color: #3a3a32; }
 
-    /* ── Terminal Preview ─────────────────────────────── */
-    .terminal-block {
-      margin-top: 64px;
-      width: 100%; max-width: 660px;
+    /* ── Real terminal blocks ─────────────────────────── */
+    .term-box {
+      width: 100%; max-width: 720px;
       border-radius: var(--radius);
       overflow: hidden;
       border: 1px solid var(--border);
       background: #0c0c09;
       box-shadow: 0 8px 40px rgba(0,0,0,.5);
+      margin-top: 60px;
+      text-align: left;
     }
     .term-head {
       display: flex; align-items: center; gap: 7px;
       padding: 10px 14px;
       background: #161612;
       border-bottom: 1px solid #1e1e18;
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      color: var(--text-dim);
     }
     .term-dot { width: 8px; height: 8px; border-radius: 50%; }
     .term-dot:nth-child(1) { background: #ff5f56; }
     .term-dot:nth-child(2) { background: #e5c07b; }
     .term-dot:nth-child(3) { background: #7ecb6d; }
-    .term-title { margin-left: 10px; font-family: var(--font-mono); font-size: .7rem; color: var(--text-dim); }
+    .term-title { margin-left: 10px; }
+
     .term-body {
-      padding: 18px 20px;
+      padding: 14px 0;
       font-family: var(--font-mono);
-      font-size: .8rem;
-      line-height: 1.7;
-      text-align: left;
-      color: var(--text-muted);
+      font-size: .78rem;
+      line-height: 1.5;
+      color: var(--text);
     }
-    .term-body .pr { color: var(--text-dim); }
-    .term-body .pr::before { content: '$ '; }
-    .term-body .cmd { color: var(--text); }
-    .term-body .ok { color: var(--green); }
-    .term-body .hl { color: var(--accent); }
-    .term-body .cur {
-      display: inline-block;
-      width: 7px; height: 1em;
-      background: var(--text);
-      animation: blink 1s step-end infinite;
-      vertical-align: text-bottom;
+    .term-body .l { padding: 2px 20px; }
+    .term-body .l.dim { color: var(--text-dim); }
+    .term-body .l.muted { color: var(--text-muted); }
+    .term-body .l.g { color: var(--green); }
+    .term-body .l.c { color: var(--accent); }
+    .term-body .l.y { color: var(--amber); }
+    .term-body .l.r { color: var(--red); }
+    .term-body .l.b { font-weight: 700; }
+    .term-body .l.bold-c { font-weight: 700; color: var(--accent); }
+    .term-body .l.e { color: var(--amber); }
+
+    /* Welcome box */
+    .welcome-line { padding: 0 20px; line-height: 1.6; }
+    .welcome-line.c { color: var(--accent); }
+    .welcome-line .label { color: var(--text-dim); font-weight: 700; }
+
+    /* Spinner frame animation for demo */
+    @keyframes spin {
+      0%   { content: '⠋'; }
+      10%  { content: '⠙'; }
+      20%  { content: '⠹'; }
+      30%  { content: '⠸'; }
+      40%  { content: '⠼'; }
+      50%  { content: '⠴'; }
+      60%  { content: '⠦'; }
+      70%  { content: '⠧'; }
+      80%  { content: '⠇'; }
+      90%  { content: '⠏'; }
     }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .spinner::after {
+      animation: spin 1s step-end infinite;
+      content: '⠋';
+    }
 
     /* ── Section Common ───────────────────────────────── */
     section { padding: 90px 28px; }
@@ -263,7 +286,7 @@
       font-family: var(--font-mono);
       font-size: .85rem;
       margin-bottom: 14px;
-      background: rgba(138,180,248,.08);
+      background: rgba(126,184,240,.08);
       color: var(--accent);
     }
 
@@ -307,20 +330,6 @@
     .panel.active { display: block; animation: fadeIn .2s ease; }
     @keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
 
-    /* ── Demo Terminal ────────────────────────────────── */
-    .demo-term {
-      max-width: 660px; margin: 36px auto 0;
-      border-radius: var(--radius); overflow: hidden;
-      border: 1px solid var(--border);
-      background: #0c0c09;
-    }
-    .demo-line { padding: 0 18px; font-family: var(--font-mono); font-size: .75rem; line-height: 2.1; }
-    .demo-line:nth-child(even) { background: rgba(255,255,255,.012); }
-    .demo-line .g { color: var(--green); }
-    .demo-line .c { color: var(--accent); }
-    .demo-line .y { color: var(--amber); }
-    .demo-line .m { color: var(--text-dim); }
-
     /* ── CTA ──────────────────────────────────────────── */
     .cta-sec { text-align: center; padding: 100px 28px; position: relative; }
     .cta-sec h2 { font-family: var(--font-serif); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 600; margin-bottom: 14px; }
@@ -339,19 +348,18 @@
     footer a { color: var(--text-dim); }
     footer a:hover { color: var(--text-muted); }
 
-    /* ── Responsive ───────────────────────────────────── */
     @media (max-width: 640px) {
       .nav-links a:not(.nav-cta) { display: none; }
       .hero h1 { font-size: 2.4rem; }
-      .term-body { font-size: .72rem; padding: 14px; }
-      .demo-line { font-size: .68rem; padding: 0 12px; }
+      .term-body { font-size: .68rem; }
+      .term-body .l { padding: 1px 14px; }
+      .welcome-line { padding: 0 14px; font-size: .7rem; }
       section { padding: 60px 18px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── Nav ────────────────────────────────────── -->
   <nav>
     <div class="logo">Calen <em>Code</em></div>
     <div class="nav-links">
@@ -376,8 +384,8 @@
     </h1>
     <p>
       Calen Code is an AI coding agent that lives in your terminal.
-      Read, edit, debug, refactor, and ship code — powered by
-      state-of-the-art LLMs, all from a single binary.
+      Read, edit, debug, refactor, and ship code — all from a
+      single ~26 MB binary with zero dependencies.
     </p>
     <div class="hero-actions">
       <a href="#install" class="btn btn-primary">
@@ -390,28 +398,24 @@
       </a>
     </div>
 
-    <!-- Terminal Preview -->
-    <div class="terminal-block">
+    <!-- ── Actual Welcome Screen ──────────────────── -->
+    <div class="term-box">
       <div class="term-head">
         <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
-        <span class="term-title">calen — interactive</span>
+        <span class="term-title">calen — interactive session</span>
       </div>
-      <div class="term-body">
-        <div><span class="pr"></span><span class="cmd">calen init</span></div>
-        <div><span class="ok">✦</span> Welcome to Calen Code v0.0.26</div>
-        <div><span class="pr"></span><span class="cmd">Explain this module</span></div>
-        <div><span class="ok">✓</span> Reading src/auth/service.ts …</div>
-        <div><span class="ok">✓</span> Reading src/auth/middleware.ts …</div>
-        <div class="ok">  The auth flow works in three stages:</div>
-        <div class="ok">  1. Middleware extracts JWT from the header</div>
-        <div class="ok">  2. AuthService.verify() validates the token</div>
-        <div class="ok">  3. On success, user is attached to context</div>
-        <div><span class="pr"></span><span class="cmd">Add rate limiting to login</span></div>
-        <div><span class="hl">✦</span> Generating plan …</div>
-        <div><span class="ok">✓</span> Edit auth/middleware.ts</div>
-        <div><span class="ok">✓</span> Edit config.ts</div>
-        <div><span class="ok">✓</span> Tests passed (12 assertions)</div>
-        <div><span class="pr"></span><span class="cur"></span></div>
+      <div class="term-body" style="padding:8px 0;">
+        <div class="welcome-line c">╭──────────────────────────────────────────────────────╮</div>
+        <div class="welcome-line c">│                                                      │</div>
+        <div class="welcome-line c">│  ▐█▛█▛█▌  Welcome to Calen Code!                     │</div>
+        <div class="welcome-line c">│  ▐█████▌  Send /help for help information.            │</div>
+        <div class="welcome-line c">│                                                      │</div>
+        <div class="welcome-line c">│  <span class="label">Directory:</span> ~/project                         │</div>
+        <div class="welcome-line c">│  <span class="label">Session:</span>   session_037e4239-24db-45fe-86b0     │</div>
+        <div class="welcome-line c">│  <span class="label">Model:</span>     claude-sonnet-4                    │</div>
+        <div class="welcome-line c">│  <span class="label">Version:</span>   0.0.26                            │</div>
+        <div class="welcome-line c">│                                                      │</div>
+        <div class="welcome-line c">╰──────────────────────────────────────────────────────╯</div>
       </div>
     </div>
   </section>
@@ -494,43 +498,77 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
       </div>
     </div>
 
-    <p style="margin-top: 24px; color: var(--text-muted); font-size: .88rem;">
+    <p style="margin-top:24px;color:var(--text-muted);font-size:.88rem;">
       Installed to <code style="background:var(--bg-card);padding:1px 7px;border-radius:4px;font-family:var(--font-mono);font-size:.78rem;">~/.local/bin/calen</code>
       &ensp;·&ensp; Run <code style="background:var(--bg-card);padding:1px 7px;border-radius:4px;font-family:var(--font-mono);font-size:.78rem;">calen --help</code>
     </p>
   </section>
 
-  <!-- ── Demo ────────────────────────────────────── -->
+  <!-- ── Demo (real conversation) ─────────────────── -->
   <section id="demo" class="sec-c">
     <div class="sec-label">✦ In Action</div>
     <h2 class="sec-title">See it work</h2>
     <p class="sec-sub">A real session — Calen Code reading, explaining, and refactoring autonomously.</p>
 
-    <div class="demo-term">
+    <div class="term-box" style="margin-top:0;">
       <div class="term-head">
         <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
         <span class="term-title">~/project $ calen</span>
       </div>
-      <div class="demo-line"><span class="g">✦  Calen Code v0.0.26</span></div>
-      <div class="demo-line"><span class="g">   Directory:</span> ~/project</div>
-      <div class="demo-line"><span class="g">   Model:</span>     claude-sonnet-4</div>
-      <div class="demo-line"><span class="m">─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</span></div>
-      <div class="demo-line"><span class="c">┃</span> <span class="y">You:</span> Can you explain the auth flow?</div>
-      <div class="demo-line"><span class="c">┃</span> <span class="g">✓</span> Reading auth/service.ts …</div>
-      <div class="demo-line"><span class="c">┃</span> <span class="g">✓</span> Reading auth/middleware.ts …</div>
-      <div class="demo-line"><span class="c">┃</span> The auth flow works in three stages:</div>
-      <div class="demo-line"><span class="c">┃</span>   1. Middleware extracts the JWT from the</div>
-      <div class="demo-line"><span class="c">┃</span>      <span class="c">Authorization</span> header</div>
-      <div class="demo-line"><span class="c">┃</span>   2. <span class="c">AuthService.verify()</span> validates the token</div>
-      <div class="demo-line"><span class="c">┃</span>   3. On success, user is attached to context</div>
-      <div class="demo-line"><span class="m">─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─</span></div>
-      <div class="demo-line"><span class="c">┃</span> <span class="y">You:</span> Add rate limiting to login</div>
-      <div class="demo-line"><span class="c">┃</span> <span class="c">✦</span> Generating plan …</div>
-      <div class="demo-line"><span class="c">┃</span> <span class="c">✦</span> 3 files will be modified</div>
-      <div class="demo-line"><span class="c">┃</span> <span class="g">✓</span> Edit auth/middleware.ts</div>
-      <div class="demo-line"><span class="c">┃</span> <span class="g">✓</span> Edit config.ts</div>
-      <div class="demo-line"><span class="c">┃</span> <span class="g">✓</span> Tests passed (12 assertions)</div>
-      <div class="demo-line"><span class="c">┃</span> Done. Rate limiting active on <span class="c">/login</span>.</div>
+      <div class="term-body">
+
+        <!-- Welcome box appears -->
+        <div class="l c" style="padding:0 20px;font-size:.72rem;">╭──────────────────────────────────────────╮</div>
+        <div class="l c" style="padding:0 20px;font-size:.72px;">│  ▐█▛█▛█▌  Welcome to Calen Code!         │</div>
+        <div class="l c" style="padding:0 20px;font-size:.72rem;">│  ▐█████▌  Send /help for help.           │</div>
+        <div class="l c" style="padding:0 20px;font-size:.72rem;">╰──────────────────────────────────────────╯</div>
+        <div class="l" style="height:4px;"></div>
+
+        <!-- User asks a question -->
+        <div class="l y">✨ Can you explain the auth flow?</div>
+        <div class="l" style="height:2px;"></div>
+
+        <!-- Assistant responds (● bullet) -->
+        <div class="l muted">●  Let me look at the auth module.</div>
+
+        <!-- Tool calls that happen -->
+        <div class="l dim">  ● Using Read (src/auth/service.ts)</div>
+        <div class="l dim">  ● Using Read (src/auth/middleware.ts)</div>
+        <div class="l g">  ✓ Used Read (src/auth/middleware.ts) · 47 lines</div>
+        <div class="l g">  ✓ Used Read (src/auth/service.ts) · 83 lines</div>
+        <div class="l" style="height:2px;"></div>
+
+        <!-- Assistant answers with markdown -->
+        <div class="l muted">  ● The auth flow works in three stages:</div>
+        <div class="l muted">    </div>
+        <div class="l muted">    1. **Middleware** extracts the JWT from the</div>
+        <div class="l muted">       `Authorization` header</div>
+        <div class="l muted">    2. **AuthService.verify()** validates the token</div>
+        <div class="l muted">    3. On success, the user object is attached</div>
+        <div class="l muted">       to the request context</div>
+        <div class="l" style="height:4px;"></div>
+
+        <!-- User asks for a change -->
+        <div class="l y">✨ Add rate limiting to /login</div>
+        <div class="l" style="height:2px;"></div>
+
+        <!-- Agent plans and executes -->
+        <div class="l dim">  ● Using Agent (Add rate limiting to login route)</div>
+        <div class="l e">    ✦ Generating plan …</div>
+        <div class="l e">    ✦ 3 files will be modified</div>
+        <div class="l g">    ✓ Edit (src/auth/middleware.ts) +8 -2</div>
+        <div class="l g">    ✓ Edit (src/auth/service.ts) +12 -0</div>
+        <div class="l g">    ✓ Edit (src/config.ts) +4 -0</div>
+        <div class="l dim">  ● Bash (npm test)</div>
+        <div class="l dim" style="padding-left:40px;">$ npm test</div>
+        <div class="l g" style="padding-left:40px;">  ✓ Tests passed (2 files, 12 assertions)</div>
+        <div class="l g">  ✓ Used Bash (npm test) · exit 0</div>
+        <div class="l" style="height:2px;"></div>
+
+        <!-- Final result -->
+        <div class="l g">  ✓ Done! Rate limiting is now active on /login.</div>
+
+      </div>
     </div>
   </section>
 
@@ -545,7 +583,6 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
     </a>
   </section>
 
-  <!-- ── Footer ──────────────────────────────────── -->
   <footer>
     <div>© 2026 Calen Code</div>
     <div class="links">
