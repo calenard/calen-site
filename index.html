@@ -143,7 +143,6 @@
     /* ── Nav logo face ─────────────────────────────── */
     .nav-logo-face {
       display: inline-flex;
-      position: relative;
       width: 2.2em; height: 1.5em;
       color: var(--accent);
       flex: none;
@@ -152,21 +151,6 @@
     .nav-logo-face svg {
       display: block;
       width: 100%; height: 100%;
-    }
-    .nav-logo-face .nav-face-normal {
-      transition: opacity 0.35s ease;
-    }
-    .nav-logo-face .nav-face-angry {
-      position: absolute;
-      top: 0; left: 0;
-      opacity: 0;
-      transition: opacity 0.35s ease;
-    }
-    .nav-logo-face.angry-mode .nav-face-normal {
-      opacity: 0.3;
-    }
-    .nav-logo-face.angry-mode .nav-face-angry {
-      opacity: 1;
     }
     .nav-logo-face .nav-eyes {
       animation: nav-eye-look 16s ease-in-out infinite;
@@ -196,8 +180,8 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .nav-eyes, .nav-eye, .fe-eyes, .fe-eye { animation: none !important; }
-      nav, .nav-logo-face .nav-face-angry, .nav-logo-face .nav-face-normal,
-      .floating-face .face-normal, .floating-face .face-spam { transition: none !important; }
+      nav { transition: none; }
+      .floating-face { transition: none; }
     }
 
     /* ── Hero ─────────────────────────────────────────── */
@@ -545,22 +529,6 @@
       width: 3em; height: 2em;
     }
     .floating-face svg { display: block; width: 100%; height: 100%; }
-    .floating-face .face-normal {
-      transition: opacity 0.4s ease;
-    }
-    .floating-face .face-spam {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-    .floating-face.angry-mode .face-normal {
-      opacity: 0.3;
-    }
-    .floating-face.angry-mode .face-spam {
-      opacity: 1;
-    }
     .floating-face .fe-eyes {
       animation: nav-eye-look 16s ease-in-out infinite;
     }
@@ -602,7 +570,7 @@
     <div class="nav-inner">
       <div class="logo">
         <span class="nav-logo-face" id="navLogoFace" onclick="blinkNavLogo()">
-          <svg class="nav-face-normal" viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
+          <svg viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
             <defs>
               <mask id="navEyes" maskUnits="userSpaceOnUse">
                 <rect x="0" y="0" width="32" height="22" fill="#fff" />
@@ -613,25 +581,6 @@
               </mask>
             </defs>
             <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#navEyes)" />
-          </svg>
-          <svg class="nav-face-angry" viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
-            <defs>
-              <mask id="navEyesAngry" maskUnits="userSpaceOnUse">
-                <rect x="0" y="0" width="32" height="22" fill="#fff" />
-                <!-- Normal open eyes -->
-                <rect x="11.5" y="7" width="3" height="8" rx="1.5" fill="#000" />
-                <rect x="17.5" y="7" width="3" height="8" rx="1.5" fill="#000" />
-                <!-- Furrowed brows (black = transparent lines on the face) -->
-                <path d="M10.5 6.5 L15.5 8" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round" />
-                <path d="M21.5 6.5 L16.5 8" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round" />
-                <!-- Tiny sharp marks inside eyes -->
-                <g stroke="#fff" stroke-width="0.45" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M13.5 9.5 L12.5 10.5 L13.5 11.5" />
-                  <path d="M18.5 9.5 L19.5 10.5 L18.5 11.5" />
-                </g>
-              </mask>
-            </defs>
-            <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#navEyesAngry)" />
           </svg>
         </span>
         Calen <em>Code</em>
@@ -654,7 +603,7 @@
 
   <!-- ── Floating face ──────────────────────────────── -->
   <div class="floating-face" id="floatingFace" onclick="blinkFloatingFace()">
-    <svg class="face-normal" viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
+    <svg viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
       <defs>
         <mask id="feEyes" maskUnits="userSpaceOnUse">
           <rect x="0" y="0" width="32" height="22" fill="#fff" />
@@ -665,25 +614,6 @@
         </mask>
       </defs>
       <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#feEyes)" />
-    </svg>
-    <svg class="face-spam" viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
-      <defs>
-        <mask id="feEyesAngry" maskUnits="userSpaceOnUse">
-          <rect x="0" y="0" width="32" height="22" fill="#fff" />
-          <!-- Normal open eyes -->
-          <rect x="11.5" y="7" width="3" height="8" rx="1.5" fill="#000" />
-          <rect x="17.5" y="7" width="3" height="8" rx="1.5" fill="#000" />
-          <!-- Furrowed brows (black = transparent lines on the face) -->
-          <path d="M10.5 6.5 L15.5 8" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round" />
-          <path d="M21.5 6.5 L16.5 8" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round" />
-          <!-- Tiny sharp marks inside eyes -->
-          <g stroke="#fff" stroke-width="0.45" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M13.5 9.5 L12.5 10.5 L13.5 11.5" />
-            <path d="M18.5 9.5 L19.5 10.5 L18.5 11.5" />
-          </g>
-        </mask>
-      </defs>
-      <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#feEyesAngry)" />
     </svg>
   </div>
 
@@ -952,34 +882,10 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
         if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
-    // Shared angry-mode state
-    let _navClickTimes = [];
-    let _faceClickTimes = [];
-    let _angryTimer = null;
-
-    function triggerAngry(el) {
-      el.classList.add('angry-mode');
-      clearTimeout(_angryTimer);
-      _angryTimer = setTimeout(() => {
-        el.classList.remove('angry-mode');
-      }, 2500);
-    }
-
     // Blink nav logo face on click
     function blinkNavLogo() {
       const el = document.getElementById('navLogoFace');
       if (!el) return;
-
-      const now = Date.now();
-      _navClickTimes.push(now);
-      _navClickTimes = _navClickTimes.filter(t => now - t < 1200);
-
-      if (_navClickTimes.length >= 4) {
-        triggerAngry(el);
-        _navClickTimes = [];
-        return;
-      }
-
       el.classList.remove('blink-now');
       void el.getBoundingClientRect();
       el.classList.add('blink-now');
@@ -1033,17 +939,6 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
     function blinkFloatingFace() {
       const el = document.getElementById('floatingFace');
       if (!el) return;
-
-      const now = Date.now();
-      _faceClickTimes.push(now);
-      _faceClickTimes = _faceClickTimes.filter(t => now - t < 1200);
-
-      if (_faceClickTimes.length >= 4) {
-        triggerAngry(el);
-        _faceClickTimes = [];
-        return;
-      }
-
       el.classList.remove('blink-now');
       void el.getBoundingClientRect();
       el.classList.add('blink-now');
