@@ -315,19 +315,25 @@
       content: '⠋';
     }
 
-    /* ── Terminal input prompt ───────────────────────── */
-    .term-input {
-      border-top: 1px solid #1e1e18;
-      padding: 8px 14px 8px 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    /* ── Terminal input prompt (boxed) ──────────────── */
+    .term-input-wrap {
+      position: relative;
       font-family: var(--font-mono);
       font-size: .78rem;
+      margin: 0;
+      background: #0c0c09;
+      border-top: 1px solid #1e1e18;
+      border-radius: 0 0 var(--radius) var(--radius);
     }
-    .term-input .prompt { color: var(--accent); font-weight: 700; }
-    .term-input .text { color: var(--text-muted); }
-    .term-input .cursor {
+    .term-input-line {
+      display: flex; align-items: center;
+      padding: 6px 14px 6px 14px;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+    .term-input-line .prompt { color: var(--accent); font-weight: 700; }
+    .term-input-line .text { color: var(--text-muted); }
+    .term-input-line .cursor {
       display: inline-block;
       width: 6px; height: 14px;
       background: var(--text);
@@ -335,12 +341,39 @@
       vertical-align: text-bottom;
     }
     @keyframes blink-cursor { 0%,100%{opacity:1} 50%{opacity:0} }
+    .term-input-top {
+      display: flex; align-items: center;
+      padding: 6px 14px 0 14px;
+      font-size: .7rem;
+      color: var(--text-dim);
+      gap: 2px;
+    }
+    .term-input-top .tl { color: var(--border); }
+    .term-input-top .line {
+      flex: 1; height: 0;
+      border-top: 1px solid var(--border);
+      margin: 0 2px;
+    }
+    .term-input-top .tr { color: var(--border); }
+    .term-input-bot {
+      display: flex; align-items: center;
+      padding: 0 14px 6px 14px;
+      font-size: .7rem;
+      color: var(--border);
+      gap: 2px;
+    }
+    .term-input-bot .bl { color: var(--border); }
+    .term-input-bot .line {
+      flex: 1; height: 0;
+      border-top: 1px solid var(--border);
+      margin: 0 2px;
+    }
+    .term-input-bot .br { color: var(--border); }
     .term-footer {
       display: flex; justify-content: space-between;
       padding: 5px 14px;
       background: #0c0c09;
       border-top: 1px solid #1e1e18;
-      border-radius: 0 0 var(--radius) var(--radius);
       font-family: var(--font-mono);
       font-size: .65rem;
       color: var(--text-dim);
@@ -547,6 +580,20 @@
           <div><span class="label">Version:</span>    0.0.26</div>
         </div>
       </div>
+      <!-- Input prompt -->
+      <div class="term-input-wrap">
+        <div class="term-input-top"><span class="tl">╭</span><span class="line"></span><span class="tr">╮</span></div>
+        <div class="term-input-line"><span class="prompt">&gt;</span><span class="text">type a message or /help</span><span class="cursor"></span></div>
+        <div class="term-input-bot"><span class="bl">╰</span><span class="line"></span><span class="br">╯</span></div>
+      </div>
+      <!-- Footer -->
+      <div class="term-footer">
+        <div><span class="badge">yolo</span>  claude-sonnet-4</div>
+        <div class="right">
+          <span>~/project</span>
+          <span>context: 0.0%</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -704,10 +751,10 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
 
       </div>
       <!-- Input prompt -->
-      <div class="term-input">
-        <span class="prompt">&gt;</span>
-        <span class="text">explain the auth middleware chain</span>
-        <span class="cursor"></span>
+      <div class="term-input-wrap">
+        <div class="term-input-top"><span class="tl">╭</span><span class="line"></span><span class="tr">╮</span></div>
+        <div class="term-input-line"><span class="prompt">&gt;</span><span class="text">explain the auth middleware chain</span><span class="cursor"></span></div>
+        <div class="term-input-bot"><span class="bl">╰</span><span class="line"></span><span class="br">╯</span></div>
       </div>
       <!-- Footer -->
       <div class="term-footer">
