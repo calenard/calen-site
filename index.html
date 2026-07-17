@@ -98,6 +98,10 @@
       -webkit-backdrop-filter: blur(18px) saturate(1.2);
       background: rgba(18,18,14,.75);
       border-bottom: 1px solid var(--border);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    nav.nav-hidden {
+      transform: translateY(-100%);
     }
     .nav-inner {
       max-width: 800px;
@@ -175,7 +179,9 @@
       50% { transform: scaleY(0.1); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .nav-eyes, .nav-eye { animation: none !important; }
+      .nav-eyes, .nav-eye, .fe-eyes, .fe-eye { animation: none !important; }
+      nav { transition: none; }
+      .floating-face { transition: none; }
     }
 
     /* ── Hero ─────────────────────────────────────────── */
@@ -503,6 +509,39 @@
     }
     .term-footer .right { display: flex; gap: 12px; }
 
+    /* ── Floating face ───────────────────────────────── */
+    .floating-face {
+      position: fixed;
+      z-index: 99;
+      color: var(--accent);
+      width: 2.2em; height: 1.5em;
+      left: 28px;
+      top: 14px;
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .floating-face.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .floating-face.at-bottom {
+      top: auto;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 3em; height: 2em;
+    }
+    .floating-face svg { display: block; width: 100%; height: 100%; }
+    .floating-face .fe-eyes {
+      animation: nav-eye-look 16s ease-in-out infinite;
+    }
+    .floating-face .fe-eye {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: nav-eye-blink 11s ease-in-out infinite;
+    }
+
     /* ── Mobile nav ──────────────────────────────────── */
     @media (max-width: 720px) {
       .nav-inner { width: 100%; padding: 12px 16px; }
@@ -561,6 +600,22 @@
       </div>
     </div>
   </nav>
+
+  <!-- ── Floating face ──────────────────────────────── -->
+  <div class="floating-face" id="floatingFace" onclick="blinkFloatingFace()">
+    <svg viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
+      <defs>
+        <mask id="feEyes" maskUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="32" height="22" fill="#fff" />
+          <g class="fe-eyes" fill="#000">
+            <rect class="fe-eye" x="11.8" y="7" width="2.8" height="8" rx="1.4" />
+            <rect class="fe-eye" x="17.4" y="7" width="2.8" height="8" rx="1.4" />
+          </g>
+        </mask>
+      </defs>
+      <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#feEyes)" />
+    </svg>
+  </div>
 
   <!-- ── Hero ────────────────────────────────────── -->
   <section class="hero">
@@ -845,10 +900,51 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
       navToggle.addEventListener('click', () => {
         navLinks.classList.toggle('open');
       });
-      // Close menu on link click
       navLinks.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', () => navLinks.classList.remove('open'));
       });
+    }
+    // Scroll hide nav + floating face
+    (function() {
+      const nav = document.querySelector('nav');
+      const face = document.getElementById('floatingFace');
+      let lastScroll = 0;
+      let ticking = false;
+
+      function onScroll() {
+        const now = window.scrollY;
+
+        if (now > 80 && now > lastScroll + 5) {
+          // Scrolling down — hide nav, show face at bottom
+          nav.classList.add('nav-hidden');
+          face.classList.add('show', 'at-bottom');
+        } else if (now < lastScroll - 5) {
+          // Scrolling up — show nav, return face
+          nav.classList.remove('nav-hidden');
+          face.classList.remove('at-bottom');
+          if (now < 80) {
+            face.classList.remove('show');
+          }
+        }
+        lastScroll = now;
+        ticking = false;
+      }
+
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      }, { passive: true });
+    })();
+
+    function blinkFloatingFace() {
+      const el = document.getElementById('floatingFace');
+      if (!el) return;
+      el.style.animation = 'none';
+      void el.getBoundingClientRect();
+      el.style.animation = '';
+      setTimeout(() => { el.style.animation = ''; }, 300);
     }
   </script>
 </body>
