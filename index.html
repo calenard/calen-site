@@ -208,10 +208,20 @@
     .term-body .l.bold-c { font-weight: 700; color: var(--accent); }
     .term-body .l.e { color: var(--amber); }
 
-    /* Welcome box */
-    .welcome-line { padding: 0 20px; line-height: 1.6; }
-    .welcome-line.c { color: var(--accent); }
-    .welcome-line .label { color: var(--text-dim); font-weight: 700; }
+    /* Welcome box (responsive CSS border, not fixed ASCII) */
+    .welcome-box {
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      margin: 0 10px;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: .78rem;
+      line-height: 1.7;
+    }
+    .welcome-box .logo-art { white-space: pre; }
+    .welcome-box .label { color: var(--text-dim); font-weight: 700; }
+    .welcome-box .row { display: flex; gap: 4px; }
 
     /* Spinner frame animation for demo */
     @keyframes spin {
@@ -398,24 +408,22 @@
       </a>
     </div>
 
-    <!-- ── Actual Welcome Screen ──────────────────── -->
+    <!-- ── Actual Welcome Screen (responsive) ─────── -->
     <div class="term-box">
       <div class="term-head">
         <span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span>
         <span class="term-title">calen — interactive session</span>
       </div>
-      <div class="term-body" style="padding:8px 0;">
-        <div class="welcome-line c">╭──────────────────────────────────────────────────────╮</div>
-        <div class="welcome-line c">│                                                      │</div>
-        <div class="welcome-line c">│  ▐█▛█▛█▌  Welcome to Calen Code!                     │</div>
-        <div class="welcome-line c">│  ▐█████▌  Send /help for help information.            │</div>
-        <div class="welcome-line c">│                                                      │</div>
-        <div class="welcome-line c">│  <span class="label">Directory:</span> ~/project                         │</div>
-        <div class="welcome-line c">│  <span class="label">Session:</span>   session_037e4239-24db-45fe-86b0     │</div>
-        <div class="welcome-line c">│  <span class="label">Model:</span>     claude-sonnet-4                    │</div>
-        <div class="welcome-line c">│  <span class="label">Version:</span>   0.0.26                            │</div>
-        <div class="welcome-line c">│                                                      │</div>
-        <div class="welcome-line c">╰──────────────────────────────────────────────────────╯</div>
+      <div class="term-body" style="padding:12px 0;">
+        <div class="welcome-box">
+          <div><span class="logo-art">▐█▛█▛█▌</span>  Welcome to <strong>Calen Code</strong>!</div>
+          <div><span class="logo-art">▐█████▌</span>  Send <em>/help</em> for help information.</div>
+          <div style="height:6px;"></div>
+          <div><span class="label">Directory:</span>  ~/project</div>
+          <div><span class="label">Session:</span>    session_037e…86b0</div>
+          <div><span class="label">Model:</span>      claude-sonnet-4</div>
+          <div><span class="label">Version:</span>    0.0.26</div>
+        </div>
       </div>
     </div>
   </section>
@@ -518,10 +526,10 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
       <div class="term-body">
 
         <!-- Welcome box appears -->
-        <div class="l c" style="padding:0 20px;font-size:.72rem;">╭──────────────────────────────────────────╮</div>
-        <div class="l c" style="padding:0 20px;font-size:.72px;">│  ▐█▛█▛█▌  Welcome to Calen Code!         │</div>
-        <div class="l c" style="padding:0 20px;font-size:.72rem;">│  ▐█████▌  Send /help for help.           │</div>
-        <div class="l c" style="padding:0 20px;font-size:.72rem;">╰──────────────────────────────────────────╯</div>
+        <div class="welcome-box" style="margin:4px 10px;font-size:.72rem;">
+          <div><span class="logo-art">▐█▛█▛█▌</span>  Welcome to <strong>Calen Code</strong>!</div>
+          <div><span class="logo-art">▐█████▌</span>  Send <em>/help</em> for help.</div>
+        </div>
         <div class="l" style="height:4px;"></div>
 
         <!-- User asks a question -->
