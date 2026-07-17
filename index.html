@@ -282,6 +282,7 @@
     .term-body .l { padding: 2px 20px; }
     .term-body .l.dim { color: var(--text-dim); }
     .term-body .l.muted { color: var(--text-muted); }
+    .term-body code { background: rgba(255,255,255,.07); padding: 0 5px; border-radius: 3px; font-family: var(--font-mono); font-size: .87em; }
     .term-body .l.g { color: var(--green); }
     .term-body .l.c { color: var(--accent); }
     .term-body .l.y { color: var(--amber); }
@@ -801,9 +802,9 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
         <!-- Assistant answers with markdown -->
         <div class="l muted">  ● The auth flow works in three stages:</div>
         <div class="l muted">    </div>
-        <div class="l muted">    1. **Middleware** extracts the JWT from the</div>
-        <div class="l muted">       `Authorization` header</div>
-        <div class="l muted">    2. **AuthService.verify()** validates the token</div>
+        <div class="l muted">    1. <strong>Middleware</strong> extracts the JWT from the</div>
+        <div class="l muted">       <code>Authorization</code> header</div>
+        <div class="l muted">    2. <strong>AuthService.verify()</strong> validates the token</div>
         <div class="l muted">    3. On success, the user object is attached</div>
         <div class="l muted">       to the request context</div>
         <div class="l" style="height:4px;"></div>
