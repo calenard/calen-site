@@ -315,6 +315,43 @@
       content: '⠋';
     }
 
+    /* ── Terminal input prompt ───────────────────────── */
+    .term-input {
+      border-top: 1px solid #1e1e18;
+      padding: 8px 14px 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: .78rem;
+    }
+    .term-input .prompt { color: var(--accent); font-weight: 700; }
+    .term-input .text { color: var(--text-muted); }
+    .term-input .cursor {
+      display: inline-block;
+      width: 6px; height: 14px;
+      background: var(--text);
+      animation: blink-cursor 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+    @keyframes blink-cursor { 0%,100%{opacity:1} 50%{opacity:0} }
+    .term-footer {
+      display: flex; justify-content: space-between;
+      padding: 5px 14px;
+      background: #0c0c09;
+      border-top: 1px solid #1e1e18;
+      border-radius: 0 0 var(--radius) var(--radius);
+      font-family: var(--font-mono);
+      font-size: .65rem;
+      color: var(--text-dim);
+    }
+    .term-footer .badge {
+      padding: 0 5px; border-radius: 3px;
+      background: #1a1a15; color: var(--green);
+      font-weight: 700;
+    }
+    .term-footer .right { display: flex; gap: 12px; }
+
     /* ── Sections ──────────────────────────────────── */
     section { padding: 90px 28px; }
     .sec-label {
@@ -665,6 +702,20 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
         <!-- Final result -->
         <div class="l g">  ✓ Done! Rate limiting is now active on /login.</div>
 
+      </div>
+      <!-- Input prompt -->
+      <div class="term-input">
+        <span class="prompt">&gt;</span>
+        <span class="text">explain the auth middleware chain</span>
+        <span class="cursor"></span>
+      </div>
+      <!-- Footer -->
+      <div class="term-footer">
+        <div><span class="badge">yolo</span>  claude-sonnet-4</div>
+        <div class="right">
+          <span>~/project</span>
+          <span>context: 23.4%</span>
+        </div>
       </div>
     </div>
   </section>
