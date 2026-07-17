@@ -208,7 +208,7 @@
     .term-body .l.bold-c { font-weight: 700; color: var(--accent); }
     .term-body .l.e { color: var(--amber); }
 
-    /* Welcome box (responsive CSS border, not fixed ASCII) */
+    /* Welcome box */
     .welcome-box {
       border: 1px solid var(--accent);
       border-radius: var(--radius);
@@ -219,9 +219,49 @@
       font-size: .78rem;
       line-height: 1.7;
     }
-    .welcome-box .logo-art { white-space: pre; }
     .welcome-box .label { color: var(--text-dim); font-weight: 700; }
     .welcome-box .row { display: flex; gap: 4px; }
+
+    /* ── Calen logo face (animated eyes) ─────────── */
+    .calen-logo-face {
+      display: inline-block;
+      width: 1.5em; height: 1.05em;
+      vertical-align: -0.22em;
+      color: var(--accent);
+      cursor: pointer;
+      flex: none;
+    }
+    .calen-logo-face svg {
+      display: block;
+      width: 100%; height: 100%;
+    }
+    .face-eyes { animation: face-eye-look 16s ease-in-out infinite; }
+    .face-eye {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: face-eye-blink 11s ease-in-out infinite;
+    }
+    @keyframes face-eye-look {
+      0%, 42% { transform: translateX(0); }
+      47%, 53% { transform: translateX(2px); }
+      58%, 80% { transform: translateX(0); }
+      84%, 90% { transform: translateX(-2px); }
+      95%, 100% { transform: translateX(0); }
+    }
+    @keyframes face-eye-blink {
+      0%, 94%, 100% { transform: scaleY(1); }
+      96.5%, 98% { transform: scaleY(0.12); }
+    }
+    .calen-logo-face.blink-now .face-eye {
+      animation: face-eye-blink-once 0.24s ease-in-out !important;
+    }
+    @keyframes face-eye-blink-once {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .face-eyes, .face-eye { animation: none !important; }
+    }
 
     /* Spinner frame animation for demo */
     @keyframes spin {
@@ -416,8 +456,34 @@
       </div>
       <div class="term-body" style="padding:12px 0;">
         <div class="welcome-box">
-          <div><span class="logo-art">▐█▛█▛█▌</span>  Welcome to <strong>Calen Code</strong>!</div>
-          <div><span class="logo-art">▐█████▌</span>  Send <em>/help</em> for help information.</div>
+          <div><span class="calen-logo-face" onclick="blinkFace(this)">
+            <svg viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
+              <defs>
+                <mask id="heroEyes" maskUnits="userSpaceOnUse">
+                  <rect x="0" y="0" width="32" height="22" fill="#fff" />
+                  <g class="face-eyes" fill="#000">
+                    <rect class="face-eye" x="11.8" y="7" width="2.8" height="8" rx="1.4" />
+                    <rect class="face-eye" x="17.4" y="7" width="2.8" height="8" rx="1.4" />
+                  </g>
+                </mask>
+              </defs>
+              <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#heroEyes)" />
+            </svg>
+          </span>  Welcome to <strong>Calen Code</strong>!</div>
+          <div><span class="calen-logo-face" onclick="blinkFace(this)">
+            <svg viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
+              <defs>
+                <mask id="heroEyes2" maskUnits="userSpaceOnUse">
+                  <rect x="0" y="0" width="32" height="22" fill="#fff" />
+                  <g class="face-eyes" fill="#000">
+                    <rect class="face-eye" x="11.8" y="7" width="2.8" height="8" rx="1.4" />
+                    <rect class="face-eye" x="17.4" y="7" width="2.8" height="8" rx="1.4" />
+                  </g>
+                </mask>
+              </defs>
+              <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#heroEyes2)" />
+            </svg>
+          </span>  Send <em>/help</em> for help information.</div>
           <div style="height:6px;"></div>
           <div><span class="label">Directory:</span>  ~/project</div>
           <div><span class="label">Session:</span>    session_037e…86b0</div>
@@ -527,8 +593,34 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
 
         <!-- Welcome box appears -->
         <div class="welcome-box" style="margin:4px 10px;font-size:.72rem;">
-          <div><span class="logo-art">▐█▛█▛█▌</span>  Welcome to <strong>Calen Code</strong>!</div>
-          <div><span class="logo-art">▐█████▌</span>  Send <em>/help</em> for help.</div>
+          <div><span class="calen-logo-face" onclick="blinkFace(this)">
+            <svg viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
+              <defs>
+                <mask id="demoEyes1" maskUnits="userSpaceOnUse">
+                  <rect x="0" y="0" width="32" height="22" fill="#fff" />
+                  <g class="face-eyes" fill="#000">
+                    <rect class="face-eye" x="11.8" y="7" width="2.8" height="8" rx="1.4" />
+                    <rect class="face-eye" x="17.4" y="7" width="2.8" height="8" rx="1.4" />
+                  </g>
+                </mask>
+              </defs>
+              <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#demoEyes1)" />
+            </svg>
+          </span>  Welcome to <strong>Calen Code</strong>!</div>
+          <div><span class="calen-logo-face" onclick="blinkFace(this)">
+            <svg viewBox="0 0 32 22" fill="none" role="img" aria-label="Calen Code">
+              <defs>
+                <mask id="demoEyes2" maskUnits="userSpaceOnUse">
+                  <rect x="0" y="0" width="32" height="22" fill="#fff" />
+                  <g class="face-eyes" fill="#000">
+                    <rect class="face-eye" x="11.8" y="7" width="2.8" height="8" rx="1.4" />
+                    <rect class="face-eye" x="17.4" y="7" width="2.8" height="8" rx="1.4" />
+                  </g>
+                </mask>
+              </defs>
+              <rect x="1" y="1" width="30" height="20" rx="6" fill="currentColor" mask="url(#demoEyes2)" />
+            </svg>
+          </span>  Send <em>/help</em> for help.</div>
         </div>
         <div class="l" style="height:4px;"></div>
 
@@ -616,6 +708,13 @@ irm https://raw.githubusercontent.com/<wbr>calenard/<wbr>calen-code/<wbr>main/<w
         if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
       });
     });
+    // Blink Calen face on click (same logic as sidebar)
+    function blinkFace(el) {
+      el.classList.remove('blink-now');
+      void el.getBoundingClientRect();
+      el.classList.add('blink-now');
+      setTimeout(() => el.classList.remove('blink-now'), 300);
+    }
   </script>
 </body>
 </html>
